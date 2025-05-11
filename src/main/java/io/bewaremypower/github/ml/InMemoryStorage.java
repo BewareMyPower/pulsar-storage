@@ -1,12 +1,10 @@
-package io.bewaremypower.github;
+package io.bewaremypower.github.ml;
 
-import io.netty.channel.EventLoopGroup;
 import io.opentelemetry.api.OpenTelemetry;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import org.apache.pulsar.broker.BookKeeperClientFactory;
 import org.apache.pulsar.broker.ServiceConfiguration;
 import org.apache.pulsar.broker.storage.ManagedLedgerStorage;
 import org.apache.pulsar.broker.storage.ManagedLedgerStorageClass;
@@ -18,8 +16,8 @@ public class InMemoryStorage implements ManagedLedgerStorage {
 
     @Override
     public void initialize(ServiceConfiguration conf, MetadataStoreExtended metadataStore,
-                           BookKeeperClientFactory bookkeeperProvider, EventLoopGroup eventLoopGroup,
                            OpenTelemetry openTelemetry) throws Exception {
+        storageClass.setMetadataStore(metadataStore);
     }
 
     @Override
@@ -29,7 +27,7 @@ public class InMemoryStorage implements ManagedLedgerStorage {
 
     @Override
     public Optional<ManagedLedgerStorageClass> getManagedLedgerStorageClass(String name) {
-        return Optional.empty();
+        return Optional.of(storageClass);
     }
 
     @Override

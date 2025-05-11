@@ -12,6 +12,9 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <test.additional.args>
+      --add-opens java.base/java.io=ALL-UNNAMED <!--Bookkeeper NativeIO-->
+    </test.additional.args>
   </properties>
 
   <dependencies>
@@ -20,6 +23,37 @@
       <artifactId>pulsar-broker</artifactId>
       <version>4.1.0-SNAPSHOT</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>7.11.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.38</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <argLine>-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp
+            -XX:+ExitOnOutOfMemoryError -Xmx1024M -XX:+UseZGC
+            --add-opens java.management/sun.management=ALL-UNNAMED
+            --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED
+            ${test.additional.args}
+          </argLine>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
