@@ -15,7 +15,6 @@ import org.apache.pulsar.client.api.SubscriptionInitialPosition;
 import org.apache.pulsar.common.policies.data.ClusterData;
 import org.apache.pulsar.common.policies.data.TenantInfo;
 import org.apache.pulsar.common.util.PortManager;
-import org.apache.pulsar.compaction.DisabledTopicCompactionService;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -34,7 +33,6 @@ public class EndToEndTest {
         config.setBrokerServicePort(Optional.of(brokerServicePort));
         config.setMetadataStoreUrl("memory:local");
         config.setManagedLedgerStorageClassName(InMemoryStorage.class.getName());
-        config.setCompactionServiceFactoryClassName(DisabledTopicCompactionService.class.getName());
         config.setSchemaRegistryStorageClassName(InMemorySchemaFactory.class.getName());
         config.setAdvertisedAddress("127.0.0.1"); // avoid being affected by the local proxy
         pulsar = new PulsarService(config);

@@ -9,8 +9,6 @@ See [`EndToEndTest`](./src/test/java/io/bewaremypower/github/EndToEndTest.java),
 config.setMetadataStoreUrl("memory:local");
 // The managed ledger implementation is customized that all entries are stored in memory
 config.setManagedLedgerStorageClassName(InMemoryStorage.class.getName());
-// The compaction service is disabled because all existing implementations are based on BookKeeper
-config.setCompactionServiceFactoryClassName(DisabledTopicCompactionService.class.getName());
 // The schema registry is also an in-memory implementation
 config.setSchemaRegistryStorageClassName(InMemorySchemaFactory.class.getName());
 ```
